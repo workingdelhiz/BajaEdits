@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Video Editor Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        /* User System Styles */
+        .user-system {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .user-system h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .user-system form {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .user-system input, .user-system button {
+            padding: 12px;
+            margin: 8px 0;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .user-system button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .user-system button:hover {
+            background: #45a049;
+        }
+        .user-card {
+            border: 1px solid #243ee4;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background: rgb(123, 13, 13);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .user-card button {
+            width: auto;
+            padding: 8px 12px;
+            background: #f44336;
+        }
+        .user-card button:hover {
+            background: #d32f2f;
+        }
+        #user-list {
+            margin-top: 20px;
+        }
+        section {
+            scroll-margin-top: 60px; /* Adjust to your header height */
+        }
+        .brands-section {
+            position: relative;
+            background: linear-gradient(120deg, #1F1C2C 0%, #3A335E 100%);
+            padding: 60px 0 40px 0;
+            overflow: hidden;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+        .brands-section h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 32px;
+            letter-spacing: 1px;
+            color: #f7f7f7;
+            text-shadow: 0 2px 16px rgba(106,130,251,0.18);
+        }
+        .brands-carousel {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            width: max-content;
+            animation: brands-scroll 48s linear infinite;
+            will-change: transform;
+            padding: 12px 0;
+            perspective: 1200px;
+        }
+        @keyframes brands-scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        .brands-carousel .brand-box {
+            min-width: 170px;
+            min-height: 120px;
+            margin: 0 18px;
+            background: linear-gradient(135deg, #3A335E 60%, #928DAB 100%);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(28, 25, 38, 0.18), 0 0 32px 4px rgba(146, 141, 171, 0.27);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #050505;
+            transform-style: preserve-3d;
+            z-index: 2;
+            transition: filter 0.3s, transform 0.4s cubic-bezier(.25,.8,.25,1);
+        }
+        .brands-carousel .brand-box::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(255,255,255,0.10) 0%, rgba(106,130,251,0.08) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .brands-carousel .brand-box img {
+            width: 120px;
+            height: 72px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.10));
+            z-index: 2;
+            transition: filter 0.3s, transform 0.4s cubic-bezier(.25,.8,.25,1);
+        }
+        .brands-carousel .brand-box:hover {
+            /* Removed hover scaling and rotation */
+        }
+        .brands-carousel .brand-box.clicked {
+            transform: scale(1.08); /* Slightly bigger on click */
+            box-shadow: 0 12px 36px 0 rgba(28, 25, 38, 0.22), 0 0 36px 6px rgba(146, 141, 171, 0.32);
+            z-index: 3;
+        }
+        .brands-carousel .brand-box.clicked img {
+            filter: drop-shadow(0 6px 18px rgba(0,0,0,0.18));
+            transform: translateZ(12px) scale(1.04);
+        }
+        .brands-carousel .brand-name-tag {
+            margin-top: 8px;
+            background: rgba(127, 92, 156, 0.95);
+            color: #232526;
+            border-radius: 8px;
+            padding: 8px 18px;
+            font-size: 1.08rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(35,37,38,0.10);
+            text-align: center;
+            min-width: 80px;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: unset;
+            position: static;
+            left: auto;
+            transform: none;
+            margin-bottom: 4px;
+            word-break: break-word;
+            z-index: 2;
+        }
+        .brands-names-row { display: none; }
+        @media (max-width: 900px) {
+            .brands-carousel .brand-box {
+                min-width: 110px;
+                min-height: 80px;
+            }
+            .brands-carousel .brand-box img {
+                width: 80px;
+                height: 48px;
+            }
+        }
+        .logo-img {
+            width: 100px;
+            height: auto;
+            max-height: 80px;
+            /* Removed glow effect */
+        }
+        #form-message {
+            display: none;
+            position: fixed;
+            right: 32px;
+            bottom: 32px;
+            min-width: 220px;
+            max-width: 320px;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: left;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.4s, transform 0.4s;
+        }
+        @media (max-width: 600px) {
+            #form-message {
+                left: 50%;
+                right: auto;
+                top: 16px;
+                bottom: auto;
+                min-width: 0;
+                max-width: 90vw;
+                width: 90vw;
+                transform: translate(-50%, -40px);
+                font-size: 1.08rem;
+                text-align: center;
+                padding: 12px 8px;
+            }
+        }
+        #form-message.success {
+            display: block;
+            background: #e6ffe6;
+            color: #207a3c;
+            border: 1.5px solid #2ecc40;
+        }
+        #form-message.error {
+            display: block;
+            background: #ffeaea;
+            color: #b30000;
+            border: 1.5px solid #e74c3c;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 8px;
+            }
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px 8px;
+            }
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                background: var(--nav-bg);
+                position: absolute;
+                top: 60px;
+                left: 0;
+                display: none;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links li {
+                width: 100%;
+                text-align: left;
+                padding: 12px 0;
+            }
+            .hamburger {
+                display: block;
+                cursor: pointer;
+            }
+            .about-content {
+                flex-direction: column;
+                gap: 24px;
+            }
+            .about-image {
+                margin: 0 auto;
+            }
+            .skills-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+            .brands-carousel {
+                gap: 16px;
+            }
+            .brands-section h2 {
+                font-size: 1.4rem;
+            }
+            .brand-name-tag {
+                font-size: 0.98rem;
+                padding: 6px 8px;
+            }
+            .logo-img {
+                width: 70px;
+                max-height: 60px;
+            }
+            .cta-button, .service-cta, #contact-form button {
+                font-size: 1rem;
+                padding: 12px 0;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 2vw;
+            }
+            .about-text h2, .portfolio-header h2, .services-header h2, .brands-section h2, .contact-header h2 {
+                font-size: 1.1rem;
+            }
+            .about-text p, .portfolio-header p, .services-header p, .brand-name-tag, .review-text {
+                font-size: 0.95rem;
+            }
+            .logo-img {
+                width: 54px;
+                max-height: 40px;
+            }
+            .brands-carousel .brand-box {
+                min-width: 80px;
+                min-height: 54px;
+            }
+            .brands-carousel .brand-box img {
+                width: 48px;
+                height: 28px;
+            }
+            .cta-button, .service-cta, #contact-form button {
+                font-size: 0.98rem;
+                padding: 10px 0;
+            }
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: var(--nav-bg);
+            padding: 16px 32px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            z-index: 1100;
+        }
+        .nav-links li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.08rem;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .nav-links li a:hover, .nav-links li a.active {
+            background: var(--secondary-color);
+            color: #fff;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            z-index: 1200;
+        }
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 3px;
+            background: var(--text-color);
+            margin: 4px 0;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        @media (max-width: 1024px) {
+            .navbar {
+                padding: 12px 10px;
+            }
+        }
+        @media (max-width: 900px) {
+            .nav-links {
+                gap: 14px;
+            }
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: row;
+                align-items: center;
+                padding: 10px 8px;
+            }
+            .nav-links {
+                flex-direction: column;
+                width: 100vw;
+                background: var(--nav-bg);
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                justify-content: flex-start;
+                align-items: flex-start;
+                padding-top: 70px;
+                display: none;
+                box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links li {
+                width: 100%;
+                text-align: left;
+                padding: 18px 24px;
+            }
+            .hamburger {
+                display: flex;
+            }
+        }
+        @media (max-width: 480px) {
+            .nav-links li {
+                padding: 16px 12px;
+            }
+        }
+        /* Responsive brand carousel animation */
+        .brands-carousel {
+            animation: brands-scroll 48s linear infinite;
+        }
+        @media (max-width: 900px) {
+            .brands-carousel {
+                animation-duration: 60s;
+            }
+        }
+        @media (max-width: 600px) {
+            .brands-carousel {
+                animation-duration: 80s;
+            }
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.35rem;
+            color: var(--text-color);
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px rgba(65,105,225,0.08);
+        }
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 1.08rem;
+            }
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            align-items: stretch;
+        }
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 600px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Centered section titles for Meet Our Clients */
+        .clients-section h3 {
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-size: 2.4rem;
+            font-weight: 400;
+            margin: 32px 0 18px 0;
+            letter-spacing: 1px;
+        }
+        .clients-section h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 400;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
+        }
+        /* Make PERSONALITY carousel images bigger */
+        .clients-section .brands-carousel:first-of-type .brand-box {
+            min-width: 320px;
+            min-height: 220px;
+        }
+        .clients-section .brands-carousel:first-of-type .brand-box img {
+            width: 240px;
+            height: 160px;
+        }
+        @media (max-width: 1200px) {
+            .clients-section .brands-carousel:first-of-type .brand-box {
+                min-width: 220px;
+                min-height: 160px;
+            }
+            .clients-section .brands-carousel:first-of-type .brand-box img {
+                width: 160px;
+                height: 110px;
+            }
+        }
+        @media (max-width: 900px) {
+            .clients-section .brands-carousel:first-of-type .brand-box {
+                min-width: 140px;
+                min-height: 100px;
+            }
+            .clients-section .brands-carousel:first-of-type .brand-box img {
+                width: 100px;
+                height: 64px;
+            }
+        }
+        @media (max-width: 600px) {
+            .clients-section .brands-carousel:first-of-type .brand-box {
+                min-width: 90px;
+                min-height: 60px;
+            }
+            .clients-section .brands-carousel:first-of-type .brand-box img {
+                width: 60px;
+                height: 36px;
+            }
+            .clients-section h3 {
+                font-size: 1.2rem;
+            }
+            .clients-section h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cursor Animation -->
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-follower"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo hover-glow">
+            <img src="logo bewf.png" alt="Bajaj Edits" class="logo-img">
+            <span class="logo-text">Bajaj Edits</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <!-- <li><a href="#portfolio">Portfolio</a></li> -->
+            <li><a href="#portfolio" class="nav-portfolio-btn">See My Work</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <div id="ai-model-container"></div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="particle-animation">
+            <canvas id="particle-canvas"></canvas>
+        </div>
+        <div class="hero-content">
+            <h1>Hey, I'm Tushar Bajaj</h1>
+            <p>Transforming your vision into cinematic reality</p>
+            <a href="#portfolio" class="cta-button hover-glow">View My Work <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-image hover-glow">
+                    <img src="chomuuu.jpg" alt="Video Editor">
+                </div>
+                <div class="about-text">
+                    <h2>Tushar Bajaj; </h2>
+                    <p>I'm Tushar Bajaj, the mind and motion behind Bajaj Edits — born in Delhi, built with hustle. I don't just edit videos — I cut chaos into clarity, turn moments into meaning, and make your story not just heard… but felt. With over two years in the game, I've worked with names like Flipkart, Bintin Media, Amogh Lila ji, PMO Office, CWC, etc.. delivering edits that don't just match the brief — they move people.
+                        .</p>
+                    <p>Be it a snappy Reel that makes you pause mid-scroll, a long-form YouTube edit that keeps you hooked from start to finish, or a podcast that flows smooth like a conversation with an old friend — I treat each format with its own rhythm, its own pulse.
+                        I know when to cut, when to let it breathe. I know when silence speaks louder than sound, and when a beat drop hits harder than a punchline. For me, it's not just editing — it's emotion in motion, stitched frame by frame.
+                        .</p>
+                        <p>At Bajaj Edits, we don't just chase trends — we craft timeless cuts. We don't just follow scripts — we build stories that stick. Because in a world full of noise, we believe in videos that actually say something.</p>
+                    
+                    <div class="skills-grid">
+                        <div class="skill-item hover-glow">
+                            <div class="skill-header">
+                                <div class="skill-icon">
+                                    <i class="fas fa-film"></i>
+                                </div>
+                                <div class="skill-info">
+                                    <h4>Video Editing</h4>
+                                    <p>Professional & Creative</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-item hover-glow">
+                            <div class="skill-header">
+                                <div class="skill-icon">
+                                    <i class="fas fa-palette"></i>
+                                </div>
+                                <div class="skill-info">
+                                    <h4>Color Grading</h4>
+                                    <p>Cinematic Look</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-item hover-glow">
+                            <div class="skill-header">
+                                <div class="skill-icon">
+                                    <i class="fas fa-magic"></i>
+                                </div>
+                                <div class="skill-info">
+                                    <h4>Visual Effects</h4>
+                                    <p>Creative & Dynamic</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-item hover-glow">
+                            <div class="skill-header">
+                                <div class="skill-icon">
+                                    <i class="fas fa-music"></i>
+                                </div>
+                                <div class="skill-info">
+                                    <h4>Sound Design</h4>
+                                    <p>Immersive Audio</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="portfolio-header">
+                <h2>Featured Works</h2>
+                <p>A selection of my best video editing and post-production projects</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item hover-glow">
+                    <img src="Poardcast.png" alt=>
+                    <div class="portfolio-overlay">
+                        <span class="project-category">Story Based</span>
+                        <h3>PODCAST</h3>
+                        <p>Unfiltered Talks. Untold Stories</p>
+                        <!-- <div class="project-stats">
+                            <span><i class="fas fa-eye"></i> 1.2M Views</span>
+                            <span><i class="fas fa-heart"></i> 45K Likes</span>
+                        </div> -->
+                        <a href="podcast.html" class="view-project">
+                            View Project <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item hover-glow">
+                    <img src="Ig reels .png" alt=>
+                    <div class="portfolio-overlay">
+                        <span class="project-category">Trendy</span>
+                        <h3>IG REELS</h3>
+                        <p>Fast to Watch. Hard to Forget</p>
+                        <!-- <div class="project-stats">
+                            <span><i class="fas fa-eye"></i> 850K Views</span>
+                            <span><i class="fas fa-heart"></i> 32K Likes</span>
+                        </div> -->
+                        <a href="ig.html" class="view-project">
+                            View Project <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item hover-glow">
+                    <img src="Catalog.png" alt=>
+                    <div class="portfolio-overlay">
+                        <span class="project-category">Product Vault</span>
+                        <h3>CATALOG</h3>
+                        <p>Clean Cuts. Crisp Motions</p>
+                        <!-- <div class="project-stats">
+                            <span><i class="fas fa-award"></i> Best Editing</span>
+                            <span><i class="fas fa-film"></i> Festival Selection</span>
+                        </div> -->
+                        <a href="catalog.html" class="view-project">
+                            View Project <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- <div class="portfolio-item hover-glow">
+                    <img src="https://source.unsplash.com/random/800x600/?documentary" alt="Project 4">
+                    <div class="portfolio-overlay">
+                        <span class="project-category">Documentary</span>
+                        <h3>DOCUMENTARY</h3>
+                        <p>Environmental documentary series</p>
+                        <div class="project-stats">
+                            <span><i class="fas fa-trophy"></i> Critics' Choice</span>
+                            <span><i class="fas fa-star"></i> 4.9/5 Rating</span>
+                        </div>
+                        <a href="#" class="view-project">
+                            View Project <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div> -->
+                </div>
+            </div>
+            <div class="portfolio-cta">
+                <a href="#contact" class="cta-button hover-glow">
+                    Start Your Project
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="services-header">
+                <h2>My Services</h2>
+                <p>Elevating your content with professional video editing and post-production</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card hover-glow">
+                    <div class="service-icon">
+                        <i class="fas fa-film"></i>
+                        <div class="icon-bg"></div>
+                    </div>
+                    <h3>Video Editing</h3>
+                    <p>Professional video editing with seamless transitions, perfect timing, and engaging storytelling.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Cinematic Transitions</li>
+                        <li><i class="fas fa-check"></i> Narrative Structure</li>
+                        <li><i class="fas fa-check"></i> Pacing & Rhythm</li>
+                    </ul>
+                    <a href="#contact" class="service-cta">
+                        Get Started
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="service-card hover-glow">
+                    <div class="service-icon">
+                        <i class="fas fa-palette"></i>
+                        <div class="icon-bg"></div>
+                    </div>
+                    <h3>Color Grading</h3>
+                    <p>Professional color correction and grading to give your footage a cinematic and cohesive look.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Color Correction</li>
+                        <li><i class="fas fa-check"></i> Look Development</li>
+                        <li><i class="fas fa-check"></i> Color Matching</li>
+                    </ul>
+                    <a href="#contact" class="service-cta">
+                        Get Started
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="service-card hover-glow">
+                    <div class="service-icon">
+                        <i class="fas fa-magic"></i>
+                        <div class="icon-bg"></div>
+                    </div>
+                    <h3>Visual Effects</h3>
+                    <p>Creative visual effects and motion graphics to enhance your video's impact and engagement.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Motion Graphics</li>
+                        <li><i class="fas fa-check"></i> Special Effects</li>
+                        <li><i class="fas fa-check"></i> Text Animation</li>
+                    </ul>
+                    <a href="#contact" class="service-cta">
+                        Get Started
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="service-card hover-glow">
+                    <div class="service-icon">
+                        <i class="fas fa-music"></i>
+                        <div class="icon-bg"></div>
+                    </div>
+                    <h3>Sound Design</h3>
+                    <p>Professional audio mixing, sound effects, and music selection for immersive experiences.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Audio Mixing</li>
+                        <li><i class="fas fa-check"></i> Sound Effects</li>
+                        <li><i class="fas fa-check"></i> Music Selection</li>
+                    </ul>
+                    <a href="#contact" class="service-cta">
+                        Get Started
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Slider Section -->
+    <section class="brands-section">
+        <h2>Meet Our Clients</h2>
+        </section>
+      
+        <section class="clients-section">
+        <h3>Personalities I work with</h3>
+        <div class="brands-carousel">
+            <div class="brand-box"><img src="Amogh lila prabhu ji.png"Brand 1"><div class="brand-name-tag">Amogh lila prabhu ji</div></div>
+            <div class="brand-box"><img src="Aniruddhacharya ji.png" alt="Brand 2"><div class="brand-name-tag">Aniruddhacharya ji</div></div>
+            <div class="brand-box"><img src="Baba Ramdev ji.png" alt="Brand 3"><div class="brand-name-tag">Baba Ramdev ji</div></div>
+            <div class="brand-box"><img src="PRIME MINISTER OFFICE.png" alt="Brand 5"><div class="brand-name-tag">PRIME MINISTER OFFICE</div></div>
+            <div class="brand-box"><img src="Pawan Sharma (BJP-MLA).png" alt="Brand 6"><div class="brand-name-tag">Pawan Sharma (BJP-MLA)</div></div>
+            <div class="brand-box"><img src="Pushpendra Kulshreshtha (National Speaker).png" alt="Brand 7"><div class="brand-name-tag">Pushpendra Kulshreshtha (National Speaker)</div></div>
+            <div class="brand-box"><img src="CENTRAL WAREHOUSING CORPORATION.png" alt="Brand 8"><div class="brand-name-tag">CENTRAL WAREHOUSING CORPORATION</div></div>
+            <div class="brand-box"><img src="Chaitanya Yogesh (Spritual Guru).png" alt="Brand 9"><div class="brand-name-tag">Chaitanya Yogesh (Spritual Guru)</div></div>
+            <div class="brand-box"><img src="Devi Chitralekh ji.png" alt="Brand 10"><div class="brand-name-tag">Devi Chitralekh ji</div></div>
+            <div class="brand-box"><img src="Sanchit Seth (CYBER CRIME ADVOCATE).png" alt="Brand 11"><div class="brand-name-tag">Sanchit Seth (CYBER CRIME ADVOCATE) </div></div>
+            <div class="brand-box"><img src="Tarun Gaur (Criminal Lawer).png" alt="Brand 12"><div class="brand-name-tag">Tarun Gaur (Criminal Lawer)</div></div>
+            <div class="brand-box"><img src="Nikhil Sehrawat (MCD ADVOCATE).png" alt="Brand 13"><div class="brand-name-tag">Nikhil Sehrawat (MCD ADVOCATE)</div></div>
+            <div class="brand-box"><img src="Rajbir Malik (ACP- Delhi Police).png" alt="Brand 14"><div class="brand-name-tag">Rajbir Malik (ACP- Delhi Police)</div></div>
+            <div class="brand-box"><img src="Maneka Gandhi.png" alt="Brand 15"><div class="brand-name-tag">Maneka Gandhi</div></div>
+            <div class="brand-box"><img src="Devi Chitralekh ji.png" alt="Brand 1"><div class="brand-name-tag">Devi Chitralekh ji</div></div>
+            <div class="brand-box"><img src="Dr. Vivek Bindra.png" alt="Brand 1"><div class="brand-name-tag">Dr. Vivek Bindra</div></div>
+            <div class="brand-box"><img src="Devkinandan Thakur ji.png" alt="Brand 1"><div class="brand-name-tag">Devkinandan Thakur ji</div></div>
+            <div class="brand-box"><img src="Kailash Gahlot (BJP).png" alt="Brand 1"><div class="brand-name-tag">Kailash Gahlot (BJP)</div></div>
+            <div class="brand-box"><img src="Yashpal Sharma (ACTOR).png" alt="Brand 1"><div class="brand-name-tag">Yashpal Sharma (ACTOR)</div></div>
+              <!-- Duplicate for seamless loop -->
+              <div class="brand-box"><img src="Amogh lila prabhu ji.png"Brand 1"><div class="brand-name-tag">Amogh lila prabhu ji</div></div>
+              <div class="brand-box"><img src="Aniruddhacharya ji.png" alt="Brand 2"><div class="brand-name-tag">Aniruddhacharya ji</div></div>
+              <div class="brand-box"><img src="Baba Ramdev ji.png" alt="Brand 3"><div class="brand-name-tag">Baba Ramdev ji</div></div>
+              <div class="brand-box"><img src="PRIME MINISTER OFFICE.png" alt="Brand 5"><div class="brand-name-tag">PRIME MINISTER OFFICE</div></div>
+              <div class="brand-box"><img src="Pawan Sharma (BJP-MLA).png" alt="Brand 6"><div class="brand-name-tag">Pawan Sharma (BJP-MLA)</div></div>
+              <div class="brand-box"><img src="Pushpendra Kulshreshtha (National Speaker).png" alt="Brand 7"><div class="brand-name-tag">Pushpendra Kulshreshtha (National Speaker)</div></div>
+              <div class="brand-box"><img src="CENTRAL WAREHOUSING CORPORATION.png" alt="Brand 8"><div class="brand-name-tag">CENTRAL WAREHOUSING CORPORATION</div></div>
+              <div class="brand-box"><img src="Chaitanya Yogesh (Spritual Guru).png" alt="Brand 9"><div class="brand-name-tag">Chaitanya Yogesh (Spritual Guru)</div></div>
+              <div class="brand-box"><img src="Devi Chitralekh ji.png" alt="Brand 10"><div class="brand-name-tag">Devi Chitralekh ji</div></div>
+              <div class="brand-box"><img src="Sanchit Seth (CYBER CRIME ADVOCATE).png" alt="Brand 11"><div class="brand-name-tag">Sanchit Seth (CYBER CRIME ADVOCATE) </div></div>
+              <div class="brand-box"><img src="Tarun Gaur (Criminal Lawer).png" alt="Brand 12"><div class="brand-name-tag">Tarun Gaur (Criminal Lawer)</div></div>
+              <div class="brand-box"><img src="Nikhil Sehrawat (MCD ADVOCATE).png" alt="Brand 13"><div class="brand-name-tag">Nikhil Sehrawat (MCD ADVOCATE)</div></div>
+              <div class="brand-box"><img src="Rajbir Malik (ACP- Delhi Police).png" alt="Brand 14"><div class="brand-name-tag">Rajbir Malik (ACP- Delhi Police)</div></div>
+              <div class="brand-box"><img src="Maneka Gandhi.png" alt="Brand 15"><div class="brand-name-tag">Maneka Gandhi</div></div>
+              <div class="brand-box"><img src="Devi Chitralekh ji.png" alt="Brand 1"><div class="brand-name-tag">Devi Chitralekh ji</div></div>
+              <div class="brand-box"><img src="Dr. Vivek Bindra.png" alt="Brand 1"><div class="brand-name-tag">Dr. Vivek Bindra</div></div>
+              <div class="brand-box"><img src="Devkinandan Thakur ji.png" alt="Brand 1"><div class="brand-name-tag">Devkinandan Thakur ji</div></div>
+              <div class="brand-box"><img src="Kailash Gahlot (BJP).png" alt="Brand 1"><div class="brand-name-tag">Kailash Gahlot (BJP)</div></div>
+              <div class="brand-box"><img src="Yashpal Sharma (ACTOR).png" alt="Brand 1"><div class="brand-name-tag">Yashpal Sharma (ACTOR)</div></div>
+        </div>
+    </section>
+    <!--  Brands -->
+    <section class="clients-section">
+        <h3>Brands</h3>
+        <div class="brands-carousel">
+            <div class="brand-box"><img src="brand 1.jpg" alt="Brand 1"><div class="brand-name-tag">Autoimmunity care</div></div>
+            <div class="brand-box"><img src="brand 2.png" alt="Brand 2"><div class="brand-name-tag">Bintin media</div></div>
+            <div class="brand-box"><img src="brand 3.jpg" alt="Brand 3"><div class="brand-name-tag">Diana</div></div>
+            <div class="brand-box"><img src="brand 5.png" alt="Brand 5"><div class="brand-name-tag">Geeta Vaibhav Architechture</div></div>
+            <div class="brand-box"><img src="brand 6.png" alt="Brand 6"><div class="brand-name-tag">I Quest</div></div>
+            <div class="brand-box"><img src="brand 7.png" alt="Brand 7"><div class="brand-name-tag">Luxe Living</div></div>
+            <div class="brand-box"><img src="brand 8.png" alt="Brand 8"><div class="brand-name-tag">Naka Bandi</div></div>
+            <div class="brand-box"><img src="brand 9.png" alt="Brand 9"><div class="brand-name-tag">Ramen Media</div></div>
+            <div class="brand-box"><img src="brand 10.png" alt="Brand 10"><div class="brand-name-tag">Rising Sun</div></div>
+            <div class="brand-box"><img src="brand 11.png" alt="Brand 11"><div class="brand-name-tag">Suniye Netaji </div></div>
+            <div class="brand-box"><img src="brand 12.png" alt="Brand 12"><div class="brand-name-tag">Tath</div></div>
+            <div class="brand-box"><img src="brand 13.jpeg" alt="Brand 13"><div class="brand-name-tag">The Founders times</div></div>
+            <div class="brand-box"><img src="brand 14.png" alt="Brand 14"><div class="brand-name-tag">The Law Portel</div></div>
+            <div class="brand-box"><img src="brand 15.png" alt="Brand 15"><div class="brand-name-tag">The Tech And Torque</div></div>
+            <div class="brand-box"><img src="brand 16.jpg" alt="Brand 1"><div class="brand-name-tag">Yash Enterprises</div></div>
+            <div class="brand-box"><img src="Brand 17.png" alt="Brand 1"><div class="brand-name-tag">Boheco</div></div>
+            <div class="brand-box"><img src="brand 18.png" alt="Brand 1"><div class="brand-name-tag">Navyasa</div></div>
+            <div class="brand-box"><img src="brand 19.png" alt="Brand 1"><div class="brand-name-tag">Zorb</div></div>
+            <!-- Duplicate for seamless loop -->
+            <div class="brand-box"><img src="brand 1.jpg" alt="Brand 1"><div class="brand-name-tag">Autoimmunity care</div></div>
+            <div class="brand-box"><img src="brand 2.png" alt="Brand 2"><div class="brand-name-tag">Bintin media</div></div>
+            <div class="brand-box"><img src="brand 3.jpg" alt="Brand 3"><div class="brand-name-tag">Diana</div></div>
+            <div class="brand-box"><img src="brand 5.png" alt="Brand 5"><div class="brand-name-tag">Geeta Vaibhav Architechture</div></div>
+            <div class="brand-box"><img src="brand 6.png" alt="Brand 6"><div class="brand-name-tag">I Quest</div></div>
+            <div class="brand-box"><img src="brand 7.png" alt="Brand 7"><div class="brand-name-tag">Luxe Living</div></div>
+            <div class="brand-box"><img src="brand 8.png" alt="Brand 8"><div class="brand-name-tag">Naka Bandi</div></div>
+            <div class="brand-box"><img src="brand 9.png" alt="Brand 9"><div class="brand-name-tag">Ramen Media</div></div>
+            <div class="brand-box"><img src="brand 10.png" alt="Brand 10"><div class="brand-name-tag">Rising Sun</div></div>
+            <div class="brand-box"><img src="brand 11.png" alt="Brand 11"><div class="brand-name-tag">Suniye Netaji </div></div>
+            <div class="brand-box"><img src="brand 12.png" alt="Brand 12"><div class="brand-name-tag">Tath</div></div>
+            <div class="brand-box"><img src="brand 13.jpeg" alt="Brand 13"><div class="brand-name-tag">The Founders times</div></div>
+            <div class="brand-box"><img src="brand 14.png" alt="Brand 14"><div class="brand-name-tag">The Law Portel</div></div>
+            <div class="brand-box"><img src="brand 15.png" alt="Brand 15"><div class="brand-name-tag">The Tech And Torque</div></div>
+            <div class="brand-box"><img src="brand 16.jpg" alt="Brand 1"><div class="brand-name-tag">Yash Enterprises</div></div>
+            <div class="brand-box"><img src="Brand 17.png" alt="Brand 1"><div class="brand-name-tag">Boheco</div></div>
+            <div class="brand-box"><img src="brand 18.png" alt="Brand 1"><div class="brand-name-tag">Navyasa</div></div>
+            <div class="brand-box"><img src="brand 19.png" alt="Brand 1"><div class="brand-name-tag">Zorb</div></div>
+        </div>
+    </section>
+
+    <!-- Video Showcase Section -->
+    <!-- <section class="video-showcase">
+        <div class="container">
+            <h2>Featured Works</h2>
+            <div class="video-grid">
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/E-fdPfRxkzQ" title="Video Editor Showreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/E-fdPfRxkzQ" title="Commercial Project" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/E-fdPfRxkzQ" title="Music Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <h2>Reviews From My Promonent Clients</h2>
+            <div class="reviews-slider">
+                <div class="reviews-track">
+                    <div class="review-card active">
+                        <div class="review-header">
+                            <img src="Amogh lila prabhu ji.png" alt="Client 1" class="client-image">
+                            <div class="client-info">
+                                <h4>Amogh lila ji</h4>
+                                <p>Vice President, ISKCON
+                                </p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">Tushar ji ne content ko sirf edit nahi kiya — usmein bhaav, maryada aur sachchai ka sparsh diya. Har frame Krishna bhav se bhara tha.” </p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="Devi Chitralekh ji.png" alt="Client 2" class="client-image">
+                            <div class="client-info">
+                                <h4>Devi Chitralekha Ji
+                                </h4>
+                                <p>Motivational Speaker
+                                </p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">Jaise bhajan mein bhav hota hai, waise hi Tushar ji ke kaam mein pavitrata thi.    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="Tarun Gaur (Criminal Lawer).png" alt="Client 3" class="client-image">
+                            <div class="client-info">
+                                <h4>Tarun Gaur
+                                </h4>
+                                <p>Criminal Advocate
+                                </p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="review-text">In a world of noise, his visuals bring clarity — exactly what professionals need.   </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="Aniruddhacharya ji.png" alt="Client 4" class="client-image">
+                            <div class="client-info">
+                                <h4>Aniruddhacharya Ji
+                                </h4>
+                                <p>Katha‑Vachak
+                                </p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">Jis tarah pravachan mein gyaan hota hai, waise hi inki editing mein anubhav tha.   </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="brand 19.png" alt="Client 5" class="client-image">
+                            <div class="client-info">
+                                <h4>Zorb
+                                </h4>
+                                <p>Reusable Menstrual Product
+                                </p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">His edits made Zorb’s message flow — just like comfort during tough days.    </div>
+                    <!-- <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://source.unsplash.com/random/160x160/?portrait-6" alt="Client 6" class="client-image">
+                            <div class="client-info">
+                                <h4>James Wilson</h4>
+                                <p>Documentary Producer</p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">The attention to narrative structure and emotional storytelling in our documentary was outstanding. They have a unique ability to find the heart of a story and bring it to life through expert editing.</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://source.unsplash.com/random/160x160/?portrait-7" alt="Client 7" class="client-image">
+                            <div class="client-info">
+                                <h4>Sophie Anderson</h4>
+                                <p>Wedding Videographer</p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="review-text">They transformed our raw wedding footage into a beautiful cinematic story. The color grading and sound design were perfect, creating an emotional and timeless piece that our clients absolutely love.</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="https://source.unsplash.com/random/160x160/?portrait-8" alt="Client 8" class="client-image">
+                            <div class="client-info">
+                                <h4>Alex Kumar</h4>
+                                <p>Corporate Training Manager</p>
+                            </div> -->
+                        </div>
+                    
+                <div class="review-controls">
+                    <button class="prev-review" aria-label="Previous review">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="next-review" aria-label="Next review">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="review-indicators">
+                    <div class="indicator active"></div>
+                    <div class="indicator"></div>
+                    <div class="indicator"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="contact-background">
+            <div class="animated-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+                <div class="shape shape-5"></div>
+            </div>
+            <div class="gradient-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="contact-header">
+                <h2>Get In Touch</h2>
+            </div>
+            <div class="contact-content">
+                <form id="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" required></textarea>
+                    <button type="submit" class="cta-button">Send Message</button>
+                </form>
+                <div id="form-message"></div>
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>contactbajajedits@gmail.com </p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <p>+91 8766345014</p>
+                    </div>
+                    <!-- <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-vimeo-v"></i></a>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 #Bajaj Editis. All rights reserved.  No part of this website may be reproduced without permission.</p>
+        </div>
+    </footer>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <script src="script.js"></script>
+    <script>
+    // Brand box click effect: only one can be clicked at a time
+    document.addEventListener('DOMContentLoaded', function() {
+        const brandBoxes = document.querySelectorAll('.brands-carousel .brand-box');
+        brandBoxes.forEach(box => {
+            box.addEventListener('click', function() {
+                brandBoxes.forEach(b => b.classList.remove('clicked'));
+                this.classList.add('clicked');
+            });
+        });
+    });
+    </script>
+</body>
+</html>
