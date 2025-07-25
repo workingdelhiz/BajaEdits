@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Podcast Project – Tushar Edits</title>
+  <link rel="stylesheet" href="poadcast.css"> <!-- optional: your main CSS -->
+  <style>
+    body {
+      background-color: #0e0e0e;
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px 30px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: fadeUp 1s ease-out forwards, glow 2s ease-in-out infinite alternate;
+      text-shadow: 0 0 0px #fff, 0 0 5px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6, 0 0 25px #0073e6, 0 0 30px #0073e6, 0 0 35px #0073e6;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #bbbbbb;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      opacity: 0;
+      animation: fadeUp 1s ease-out forwards;
+      animation-delay: 0.3s;
+    }
+
+    .video-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+      justify-items: center;
+    }
+
+    .video-gallery video {
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 1 / 1;
+      height: auto;
+      border-radius: 12px;
+      object-fit: cover;
+      opacity: 0;
+      animation: slideIn 1s ease-out forwards;
+    }
+
+    .video-gallery video:nth-child(1) {
+      animation-delay: 0.6s;
+    }
+    
+    .video-gallery video:nth-child(2) {
+      animation-delay: 0.8s;
+    }
+
+
+    .gallery img {
+      width: 300px;
+      border-radius: 14px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: scale(0.9);
+      animation: zoomIn 1s ease-out forwards;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .gallery img:nth-child(1) {
+      animation-delay: 1s;
+    }
+
+    .gallery img:nth-child(2) {
+      animation-delay: 1.2s;
+    }
+
+    /* BACK BUTTON */
+    .back-btn {
+      display: inline-block;
+      margin-top: 50px;
+      text-decoration: none;
+      background-color: #ffffff;
+      color: #0e0e0e;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background-color: #dddddd;
+      transform: translateY(-2px);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-60px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes zoomIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 0px #fff, 0 0 0px #fff, 0 0 12px #0073e6, 0 0 15px #0073e6, 0 0 21px #0073e6, 0 0 22px #0073e6, 0 0 20px #0073e6;
+      }
+      /* to {
+        text-shadow: 0 0 7px #fff, 0 0 15px #fff, 0 0 20px #00aaff, 0 0 20px #00aaff, 0 0 28px #00aaff, 0 0 37px #00aaff, 0 0 36px #00aaff;
+      } */
+    }
+
+    .particle-animation {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 400px;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <div class="particle-animation">
+      <canvas id="particle-canvas"></canvas>
+  </div>
+  <h1>📽️ Ig Reels Project</h1>
+  <p> Quick cuts. Deep feels.
+Fast to watch, impossible to ignore.
+
+  <div class="video-gallery">
+    <video src="reel 1 .mp4" title="Podcast Video" controls preload="metadata"></video>
+    <video src="reel 2.mp4" title="Podcast Video" controls preload="metadata"></video>
+    <video src="reel 3 .mp4" title="Podcast Video" controls preload="metadata"></video>
+    <video src="reel 4 .mp4" title="Podcast Video" controls preload="metadata"></video>
+    <video src="reel 5 (2).mp4" title="Podcast Video" controls preload="metadata"></video>
+    <!-- <video src="reel 6.mp4" title="Podcast Video" controls preload="metadata"></video>
+    <video src="reel 7.mp4" title="Podcast Video" controls preload="metadata"></video> -->
+  </div>
+  <!-- Gallery -->
+  <!-- <div class="gallery">
+    <img src="poadcast 1 .mp4" alt="Podcast Work 1">
+    <img src="poadcast  2.mp4" alt="Podcast Work 2">
+    <!-- Add more if needed -->
+  <!-- </div> --> 
+
+  <!-- Back Button -->
+  <a class="back-btn" href="tushar.html">← Back to Home</a>
+
+  <script src="script.js"></script>
+</body>
+</html>
