@@ -1,0 +1,22 @@
+.project-detail {
+    max-width 800px;
+    margin auto;
+    padding 2rem;
+    color #fff;
+  }
+  
+  .video-wrapper {
+    margin 1rem 0;
+  }
+  
+  .gallery {
+    display flex;
+    flex-wrap wrap;
+    gap 10px;
+  }
+  
+  .gallery img {
+    width 48%;
+    border-radius 10px;
+  }
+  
